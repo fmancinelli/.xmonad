@@ -1,0 +1,14 @@
+Config { 
+  font         = "xft:Ubuntu:pixelsize=11:antialias=true:hinting=true", 
+  bgColor      = "#3F3F3F", 
+  fgColor      = "#DCDCCC", 
+  position     = Static { xpos = 0, ypos = 0, width = 1500, height = 17 },
+  lowerOnStart = False, 
+  commands     = [ Run Cpu ["-t", "Cpu: <total>", "-L","20","-H","60","-l","#7F9F7F","--normal","#F0DFAF","--high","#CC9393"] 40,
+                   Run Memory ["-t", "Mem: <usedratio>%", "-l", "#7F9F7F", "--normal","#F0DFAF","-h","#CC9393"] 40,
+                   Run Date "%a %b %_d | %H:%M" "date" 60,                   
+                   Run StdinReader ],
+  sepChar      = "%"
+  alignSep     = "}{"
+	template = " %StdinReader% }{ %cpu% | %memory% | %date%   "
+}
