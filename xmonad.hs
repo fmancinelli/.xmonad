@@ -45,6 +45,7 @@ myManageHooks = composeAll
     className =? "Chromium-browser" --> viewShift webWorkspace,
     className =? "Skype" --> viewShift imWorkspace,
     className =? "Pidgin" --> viewShift imWorkspace,
+    className =? "Eclipse" --> viewShift devWorkspace,
     manageDocks
   ]
   where viewShift = doF . liftM2 (.) W.greedyView W.shift
