@@ -4,6 +4,7 @@ import XMonad.Hooks.ManageDocks
 import XMonad.Layout.Grid
 import XMonad.Layout.IM
 import XMonad.Layout.Reflect
+import XMonad.Layout.ResizableTile
 import XMonad.Layout.Tabbed
 import XMonad.Layout.PerWorkspace
 import XMonad.Util.Run (spawnPipe)
@@ -36,7 +37,9 @@ main = do
           focusedBorderColor = "#CC2020"
         } `additionalKeys`
         [
-          ((mod1Mask, xK_r), shellPrompt myPromptConfig)          
+          ((mod1Mask,           xK_r), shellPrompt myPromptConfig),
+          ((mod1Mask,           xK_a), sendMessage MirrorExpand),
+          ((mod1Mask,           xK_z), sendMessage MirrorShrink )         
         ]
         
 -- Windows organization
@@ -71,7 +74,11 @@ myIMLayout = reflectHoriz $ withIM (0.20) (Role "buddy_list") $ withIM (0.20) (R
 myLayouts = avoidStruts $ 
             onWorkspace webWorkspace myTabbedLayout $
             onWorkspace imWorkspace myIMLayout $
-            layoutHook defaultConfig
+            standardLayouts
+          where 
+            standardLayouts = tiled ||| Mirror tiled ||| Full
+            tiled = ResizableTall 1 (3/100) (1/2) []
+            
 
 -- Dynamic shell prompt configuration
 myPromptConfig = defaultXPConfig {
